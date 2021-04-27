@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!--FILTER-->
+<div class="container">
+    <form method="GET" action="{{ url_for('listing.list_tasks') }}">
+        <div class="mb-3">
+            <label for="filter" class="form-label">Search for:</label>
+            <input type="text" class="form-control" id="filter" name="filter">
+            {% if status %}
+                <input hidden type="text" name="status" value="{{ status }}">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<br/>
+<br/>
+
+<!--TODO LIST-->
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Mark as Finished</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks.items %}
+                <tr>
+                    <td>{{ task }}</td>
+                    {% if not task.finished %}
+                        <td>
+                            <form method='POST' action="{{ url_for('listing.finish_task', task_id=task.id) }}">
+                                <input type="submit" class="btn btn-warning" value="Finish">
+                            </form>
+                        </td>
+
+                    {% else %}
+                        <td>
+                            <button class="btn btn-success disabled">Completed</button>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+
+    <!--PAGINATION-->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% for cur_page in tasks.iter_pages(left_edge=3, right_edge=3, left_current=3, right_current=3) %}
+                {% if cur_page %}
+                    <li class="page-item {{ 'active' if cur_page == page }}">
+                        <a class="page-link"
+                           href="{{ url_for('listing.list_tasks', page=cur_page, status=status, filter=filter) }}">
+                            {{cur_page}}
+                        </a>
+                    </li>
+
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link"  href="#">
+                            ...
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+
+
+</div>
+
+{% endblock %}

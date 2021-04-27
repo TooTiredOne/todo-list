@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--CONNECTING BOOTSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+</head>
+<body>
+
+    <!--NAVIGATION BAR-->
+    <nav class="navbar navbar-dark bg-dark">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listing.add_task') }}">Add new task</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listing.list_tasks', status='active') }}">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listing.list_tasks', status='finished') }}">Finished</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listing.list_tasks') }}">All</a>
+            </li>
+        </ul>
+    </nav>
+
+    <br/>
+    <br/>
+
+
+    {% block content %}
+    {% endblock %}
+
+    <!--CONNECTING BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
